@@ -16,9 +16,6 @@ js/district/stripe/stripe.api.js                                      js/distric
 js/district/stripe/stripe.js                                          js/district/stripe/stripe.js
 js/district/stripe/stripe.onepage.js                                  js/district/stripe/stripe.onepage.js
 lib/Stripe/                                                          lib/Stripe/
-lib/Error/                                                           lib/Error/
-lib/HttpClient/                                                      lib/HttpClient/
-lib/Util/                                                            lib/Util/
 skin/adminhtml/default/default/district/stripe/css/styles.css         skin/adminhtml/default/default/district/stripe/css/styles.css
 skin/adminhtml/default/default/district/stripe/font/fontello.eot      skin/adminhtml/default/default/district/stripe/font/fontello.eot
 skin/adminhtml/default/default/district/stripe/font/fontello.svg      skin/adminhtml/default/default/district/stripe/font/fontello.svg
