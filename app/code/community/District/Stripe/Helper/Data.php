@@ -38,7 +38,15 @@ class District_Stripe_Helper_Data extends Mage_Core_Helper_Abstract
         $this->setApiKey();
 
         //Get the customer token from magento
-        if($token = Mage::helper('stripe')->getCustomer()->getToken())
+        $store_id = Mage::app()->getStore()->getStoreId();
+        $all_tokens = @json_decode(Mage::helper('stripe')->getCustomer()->getToken(),true);
+        if(isset($all_tokens['store_id_'.$store_id])){
+          $token = $all_tokens['store_id_'.$store_id];
+        }else{
+          return false;
+        }
+      
+        if($token)
         {
             try {
                 return \Stripe\Customer::retrieve(Mage::helper('core')->decrypt($token));
@@ -69,7 +77,6 @@ class District_Stripe_Helper_Data extends Mage_Core_Helper_Abstract
     {
         $customer = Mage::getSingleton('customer/session')->getCustomer();
         $model = Mage::getModel('stripe/customer');
-
         return $model->load($customer->getId(), 'customer_id');
     }
 
@@ -158,8 +165,16 @@ class District_Stripe_Helper_Data extends Mage_Core_Helper_Abstract
 
             //Create stripe customer in magento
             $model = Mage::getModel('stripe/customer');
-            $model->setCustomerId($customer->getId());
-            $model->setToken(Mage::helper('core')->encrypt($stripeCustomer->id));
+            $customer_with_store_id = array();
+            $existingCustomer = $model->load($customer->getId(), 'customer_id');
+            if(!$existingCustomer->getToken()){
+              $model->setCustomerId($customer->getId());
+            }else{
+              $customer_with_store_id = json_decode($existingCustomer->getToken(),true);
+            }
+            $store_id = Mage::app()->getStore()->getStoreId();
+            $customer_with_store_id["store_id_".$store_id] = Mage::helper('core')->encrypt($stripeCustomer->id);
+            $model->setToken(json_encode($customer_with_store_id));
             $model->save();
 
         } catch (Exception $e) {
