@@ -88,8 +88,8 @@ if($cust = Mage::helper('stripe')->retrieveCustomer()) {
 
     Stripe.setPublishableKey('<?php echo Mage::getStoreConfig('payment/stripe_cc/api_publishable_key'); ?>');
 
-    (function() {
+    jQuery(function() {
         district.stripeCc.init('<?php echo $acceptedCards; ?>');
-    })();
+    });
 
 </script>
