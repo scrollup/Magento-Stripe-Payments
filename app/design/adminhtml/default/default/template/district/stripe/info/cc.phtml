@@ -27,8 +27,9 @@ $order = $payment->getOrder();
 $avsStatus = explode('/', $payment->getCcAvsStatus());
 
 //Does country match?
-if(isset($payment->getAdditionalInformation()['country'])) {
-    if($payment->getAdditionalInformation()['country'] !== $order->getBillingAddress()->getCountry()) {
+$paymentMoreInfo = $payment->getAdditionalInformation();
+if(isset($paymentMoreInfo['country'])) {
+    if($paymentMoreInfo['country'] !== $order->getBillingAddress()->getCountry()) {
         $countryStatus = 'fail';
     } else {
         $countryStatus = 'pass';
