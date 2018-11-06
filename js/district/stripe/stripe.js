@@ -75,7 +75,11 @@ district.stripeCc = function ($) {
             $('body').on('keyup', inputsStr, self.frontendKeyup);
 
             //Wrap the payment save method
-            Payment.prototype.save = Payment.prototype.save.wrap(self.paymentSave);
+            if (typeof Payment.prototype.save !== "undefined") {
+                Payment.prototype.save = Payment.prototype.save.wrap(self.paymentSave);
+            } else if (typeof OPC.prototype.save !== "undefined") {
+                OPC.prototype.save = OPC.prototype.save.wrap(self.paymentSave);
+            }
 
         } else if (typeof AdminOrder !== 'undefined') { //Admin payment
 
