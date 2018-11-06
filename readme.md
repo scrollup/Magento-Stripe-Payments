@@ -29,3 +29,9 @@ Unzip and copy the conents of the unzipped package to your Magento installation 
  database.
  8. If you already have jQuery enabled within another extension or theme, feel free to disabled them here. If you are
  unsure about this step, leave both options set to "yes", and you should be good to go.
+ 
+ ## Install with modman
+ 
+`$ modman clone template-patch https://github.com/scrollup/Magento-Stripe-Payments.git`
+ 
+ Modman details https://github.com/colinmollenhour/modman
